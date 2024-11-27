@@ -8,6 +8,9 @@ class Player:
     def __str__(self):
         return f"{self.player_dict['nickname'].title()} ({self.player_dict['name'].split(' ')[0].title()} {self.player_dict['name'].split(' ')[1].title()})"
 
+    def compare_players(self, other_player):
+        return map(lambda a, b: a == b, self.player_dict.values(), other_player.player_dict.values())
+
 
 class PlayerDatabase:
     def __init__(self, player_obj_list):
