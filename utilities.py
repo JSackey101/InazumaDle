@@ -12,6 +12,4 @@ def read_player_data(filepath):
         for row in players_data:
             player = Player(row, header_info)
             list_of_players.append(player)
-
-
-read_player_data("data.csv")
+        return list_of_players

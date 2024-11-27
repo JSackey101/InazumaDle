@@ -4,3 +4,8 @@ class Player:
         for i in range(len(header_info)):
             self.player_dict[header_info[i]] = player_data[i]
             exec(f"self.{header_info[i]} = player_data[i]")
+
+
+class PlayerDatabase:
+    def __init__(self, player_obj_list):
+        self.player_obj_list = player_obj_list
