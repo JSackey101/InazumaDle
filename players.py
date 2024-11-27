@@ -5,6 +5,9 @@ class Player:
             self.player_dict[header_info[i]] = player_data[i]
             # exec(f"self.{header_info[i]} = player_data[i]")
 
+    def __str__(self):
+        return f"{self.player_dict['nickname'].title()} ({self.player_dict['name'].split(' ')[0].title()} {self.player_dict['name'].split(' ')[1].title()})"
+
 
 class PlayerDatabase:
     def __init__(self, player_obj_list):
