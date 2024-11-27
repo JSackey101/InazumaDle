@@ -1,4 +1,5 @@
 import csv
+from players import Player
 
 
 def read_player_data(filepath):
@@ -9,10 +10,8 @@ def read_player_data(filepath):
         players_data.remove(header_info)
         list_of_players = []
         for row in players_data:
-            char_dict = {}
-            for i in range(len(header_info)):
-                char_dict[header_info[i]] = row[i]
-            list_of_players.append(char_dict)
+            player = Player(row, header_info)
+            list_of_players.append(player)
 
 
 read_player_data("data.csv")
