@@ -15,3 +15,10 @@ class Player:
 class PlayerDatabase:
     def __init__(self, player_obj_list):
         self.player_obj_list = player_obj_list
+
+    def print_players(self, first_letter):
+        print("")
+        for player in self.player_obj_list:
+            if player.player_dict["nickname"][0] == first_letter.lower() or player.player_dict["name"][0] == first_letter.lower():
+                print(player)
+        print("")
