@@ -15,6 +15,7 @@ class Player:
 class PlayerDatabase:
     def __init__(self, player_obj_list):
         self.player_obj_list = player_obj_list
+        self.player_count = len(player_obj_list)
 
     def print_players(self, first_letter):
         print("")
