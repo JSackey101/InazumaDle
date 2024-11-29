@@ -1,5 +1,5 @@
 from players import Player, PlayerDatabase
-from utilities import read_player_data
+from utilities import read_player_data, input_checker, two_input_checker
 import random
 
 

@@ -27,3 +27,15 @@ def input_checker(input_msg, des_type, reject_msg):
             return input_val.capitalize()
         else:
             print(reject_msg)
+
+
+def two_input_checker(input_msg, reject_msg, acc_input_A, acc_input_B):
+    input_not_given = True
+    while input_not_given:
+        input_val = "".join(filter(lambda x: x != " ", list(input(input_msg))))
+        if input_val.capitalize() == acc_input_A:
+            return 1
+        elif input_val.capitalize() == acc_input_B:
+            return 2
+        else:
+            print(reject_msg)
