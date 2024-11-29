@@ -13,3 +13,17 @@ def read_player_data(filepath):
             player = Player(row, header_info)
             list_of_players.append(player)
         return list_of_players
+
+
+def input_checker(input_msg, des_type, reject_msg):
+    input_not_given = True
+    while input_not_given:
+        input_val = "".join(filter(lambda x: x != " ", list(input(input_msg))))
+        if des_type == str and input_val.isalpha() == True:
+            return input_val
+        elif des_type == int and input_val.isdigit() == True:
+            return input_val
+        elif des_type == bool and (input_val.capitalize() == "True" or input_val.capitalize() == "False"):
+            return input_val.capitalize()
+        else:
+            print(reject_msg)
