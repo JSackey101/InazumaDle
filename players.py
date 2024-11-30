@@ -1,3 +1,6 @@
+import time
+
+
 class Player:
     def __init__(self, player_data, header_info):
         self.player_dict = {}
@@ -9,7 +12,7 @@ class Player:
         return f"{self.player_dict['nickname'].title()} ({self.player_dict['name'].split(' ')[0].title()} {self.player_dict['name'].split(' ')[1].title()})"
 
     def compare_players(self, other_player):
-        return map(lambda a, b: a == b, self.player_dict.values(), other_player.player_dict.values())
+        return list(map(lambda a, b: a == b, self.player_dict.values(), other_player.player_dict.values()))
 
 
 class PlayerDatabase:
@@ -22,4 +25,19 @@ class PlayerDatabase:
         for player in self.player_obj_list:
             if player.player_dict["nickname"][0] == first_letter.lower() or player.player_dict["name"][0] == first_letter.lower():
                 print(player)
+        print("")
+
+    def comparison_result(self, correct_player, guess_player):
+        comp_result = correct_player.compare_players(guess_player)
+        print(guess_player, "\n")
+        time.sleep(0.5)
+        for i in range(2, len(comp_result)):
+            time.sleep(0.5)
+            if comp_result[i]:
+                print(
+                    f"{list(guess_player.player_dict.keys())[i].capitalize()}: {list(guess_player.player_dict.values())[i].capitalize()} (Correct)")
+            else:
+                print(
+                    f"{list(guess_player.player_dict.keys())[i].capitalize()}: {list(guess_player.player_dict.values())[i].capitalize()} (Wrong)")
+            time.sleep(0.5)
         print("")
