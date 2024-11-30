@@ -8,7 +8,9 @@ import random
 # player_data.print_players("s")
 
 if __name__ == "__main__":
-    player_data = PlayerDatabase(read_player_data("data.csv"))
-    random_player = player_data.player_obj_list[random.randint(
-        0, player_data.player_count)]
-    print(random_player)
+    prog_start = True
+    while prog_start:
+        player_data = PlayerDatabase(read_player_data("data.csv"))
+        random_player = player_data.player_obj_list[random.randint(
+            0, player_data.player_count - 1)]
+        print(random_player)
