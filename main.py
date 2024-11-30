@@ -7,6 +7,43 @@ import random
 #   player_data.player_obj_list[1])))
 # player_data.print_players("s")
 
+def make_guess(player_data, random_player):
+    guess_name = input_checker(
+        "Enter the name/nickname of the character you wish to guess: ", str,
+        "The name/nickname can only contain letters")
+    matches = [player for player in player_data.player_obj_list if player["name"].split(" ")[0] == guess_name.split(" ")[0]
+               or player["nickname"] == guess_name.split(" ")[0]]
+    if len(matches) == 0:
+        print(
+            f"""The name/nickname you entered (\"{guess_name}\") was not found within the system.
+                \n""")
+    elif len(matches) == 1:
+        print("Guess Made Placeholder")
+    else:
+        if guess_name.split(" ") > 1:
+            new_matches = [player for player in matches if player["name"].split(" ")[
+                1] == guess_name.split(" ")[1]]
+        else:
+            print(
+                f"The surname you have entered ({guess_name}) matches too many within the system")
+            need_given_name = True
+            while need_given_name:
+                print("The names within the system that match the given surname are:")
+                for player in matches:
+                    print(player)
+                guess_given_name = input_checker(
+                    "Enter the given name of the character you wish to guess: ", str,
+                    "The given name can only contain letters")
+                new_matches = [
+                    player for player in matches if player["name"].split(" ")[
+                        1] == guess_given_name]
+                if len(new_matches) == 0:
+                    print(f"""The given name you entered (\"{guess_given_name}\") does not match a name.
+                    \nPlease refer to the names within the system that match the given surname.\n""")
+                else:
+                    print("Guess Made Placeholder")
+
+
 if __name__ == "__main__":
     prog_start = True
     while prog_start:
