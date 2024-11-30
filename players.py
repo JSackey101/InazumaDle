@@ -41,3 +41,4 @@ class PlayerDatabase:
                     f"{list(guess_player.player_dict.keys())[i].capitalize()}: {list(guess_player.player_dict.values())[i].capitalize()} (Wrong)")
             time.sleep(0.5)
         print("")
+        return comp_result[1]
