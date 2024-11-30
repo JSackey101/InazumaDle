@@ -13,4 +13,13 @@ if __name__ == "__main__":
         player_data = PlayerDatabase(read_player_data("data.csv"))
         random_player = player_data.player_obj_list[random.randint(
             0, player_data.player_count - 1)]
-        print(random_player)
+        tries = 0
+        prompt = two_input_checker("""\nWhat would you like to do?
+\nType "Guess" to make a guess.
+\nType "Check" to see a list of characters beginning with a specific letter.
+\nEnter here: """,
+                                   """\nYou must type either "Guess" or "Check".""", "Guess", "Check")
+        if prompt == 1:
+            pass
+        else:
+            pass
