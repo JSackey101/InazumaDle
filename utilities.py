@@ -19,7 +19,7 @@ def input_checker(input_msg, des_type, reject_msg):
     input_not_given = True
     while input_not_given:
         # "".join(filter(lambda x: x != " ", list(input(input_msg))))
-        input_val = input(input_msg)
+        input_val = input(input_msg).strip()
         if des_type == str and all(char.isalpha() or char.isspace() for char in input_val):
             return input_val
         elif des_type == int and all(char.isdigit for char in input_val):
