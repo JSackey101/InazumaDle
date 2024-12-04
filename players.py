@@ -35,10 +35,10 @@ class PlayerDatabase:
             time.sleep(0.5)
             if comp_result[i]:
                 print(
-                    f"{list(guess_player.player_dict.keys())[i].capitalize()}: {list(guess_player.player_dict.values())[i].capitalize()} (Correct)")
+                    f"{list(guess_player.player_dict.keys())[i][:1].upper() + list(guess_player.player_dict.keys())[i][1:]}: {list(guess_player.player_dict.values())[i][:1].upper() + list(guess_player.player_dict.values())[i][1:]} (Correct)")
             else:
                 print(
-                    f"{list(guess_player.player_dict.keys())[i].capitalize()}: {list(guess_player.player_dict.values())[i].capitalize()} (Wrong)")
+                    f"{list(guess_player.player_dict.keys())[i][:1].upper() + list(guess_player.player_dict.keys())[i][1:]}: {list(guess_player.player_dict.values())[i][:1].upper() + list(guess_player.player_dict.values())[i][1:]} (Wrong)")
             time.sleep(0.5)
         print("")
         return comp_result[1]
