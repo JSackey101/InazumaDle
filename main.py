@@ -7,7 +7,7 @@ import random
 #   player_data.player_obj_list[1])))
 # player_data.print_players("s")
 
-def make_guess(player_data, random_player, tries):
+def make_guess(player_data, random_player, tries, guessed_players):
     guess_not_made = True
     while guess_not_made:
         guess_name = input_checker(
@@ -20,10 +20,16 @@ def make_guess(player_data, random_player, tries):
                 f"""The name/nickname you entered (\"{guess_name}\") was not found within the system.
                     \n""")
         elif len(matches) == 1:
-            correct_guess = player_data.comparison_result(
-                random_player, matches[0])
-            tries += 1
-            return correct_guess, tries
+            if matches[0] in guessed_players:
+                print(
+                    f"""You have already guessed (\"{matches[0]}\"). Please guess another.
+                    \n""")
+            else:
+                correct_guess = player_data.comparison_result(
+                    random_player, matches[0])
+                guessed_players.append(matches[0])
+                tries += 1
+                return correct_guess, tries
 
         else:
             if guess_name.split(" ") > 1:
@@ -48,10 +54,15 @@ def make_guess(player_data, random_player, tries):
                         print(f"""The given name you entered (\"{guess_given_name}\") does not match a name.
                         \nPlease refer to the names within the system that match the given surname.\n""")
                     else:
-                        correct_guess = player_data.comparison_result(
-                            random_player, matches[0])
-                        tries += 1
-                        return correct_guess, tries
+                        if matches[0] in guessed_players:
+                            print(f"""You have already guessed (\"{matches[0]}\"). Please guess another.
+                            \n""")
+                        else:
+                            correct_guess = player_data.comparison_result(
+                                random_player, matches[0])
+                            guessed_players.append(matches[0])
+                            tries += 1
+                            return correct_guess, tries
 
 
 if __name__ == "__main__":
@@ -59,6 +70,7 @@ if __name__ == "__main__":
     random_player = player_data.player_obj_list[random.randint(
         0, player_data.player_count - 1)]
     tries = 0
+    guessed_players = []
     prog_start = True
     while prog_start:
         prompt = two_input_checker("""\nWhat would you like to do?
@@ -68,7 +80,7 @@ if __name__ == "__main__":
                                    """\nYou must type either "Guess" or "Check".""", "Guess", "Check")
         if prompt == 1:
             correct_guess, tries = make_guess(
-                player_data, random_player, tries)
+                player_data, random_player, tries, guessed_players)
             if correct_guess:
                 print(f"""Victory!
                       
