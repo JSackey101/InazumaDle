@@ -1,9 +1,12 @@
 from players import PlayerDatabase
-from utilities import read_player_data, two_input_checker, make_guess, check_players
+from utilities import read_player_data, two_input_checker, make_guess, check_players, refresh_page
 import random
+from rich.console import Console  # type: ignore
 
 
 if __name__ == "__main__":
+    console = Console(width=40)
+    refresh_page(console, "InazumaDle")
     player_data = PlayerDatabase(read_player_data("data.csv"))
     random_player = player_data.player_obj_list[random.randint(
         0, player_data.player_count - 1)]

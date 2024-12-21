@@ -121,3 +121,8 @@ def check_players(player_data, guessed_players):
             for player in matches:
                 print(player)
             check_not_done = False
+
+
+def refresh_page(console, headline):
+    console.clear()
+    console.rule(f"[bold rgb(255,165,0)]:zap: {headline} :zap:[/]\n")
