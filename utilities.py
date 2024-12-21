@@ -30,16 +30,17 @@ def input_checker(input_msg, des_type, reject_msg, console):
             console.print(reject_msg)
 
 
-def two_input_checker(input_msg, reject_msg, acc_input_A, acc_input_B):
+def two_input_checker(input_msg, reject_msg, acc_input_A, acc_input_B, console):
     input_not_given = True
     while input_not_given:
-        input_val = "".join(filter(lambda x: x != " ", list(input(input_msg))))
+        input_val = "".join(
+            filter(lambda x: x != " ", list(console.input(input_msg))))
         if input_val.capitalize() == acc_input_A:
             return 1
         elif input_val.capitalize() == acc_input_B:
             return 2
         else:
-            print(reject_msg)
+            console.print(reject_msg)
 
 
 def make_guess(player_data, random_player, tries, guessed_players):
