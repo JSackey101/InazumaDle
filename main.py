@@ -19,10 +19,10 @@ if __name__ == "__main__":
 \nType "Guess" to make a guess.
 \nType "Check" to see a list of characters beginning with a specific letter that have not been guessed already.
 \nEnter here: """,
-                                   """\nYou must type either "Guess" or "Check".""", "Guess", "Check")
+                                   """\nYou must type either "Guess" or "Check".""", "Guess", "Check", console)
         if prompt == 1:
             correct_guess, tries = make_guess(
-                player_data, random_player, tries, guessed_players)
+                player_data, random_player, tries, guessed_players, console)
             if correct_guess:
                 console.print(f"""Victory!
 
@@ -32,4 +32,4 @@ Number of tries: {tries}""")
                 break
 
         else:
-            check_players(player_data, guessed_players)
+            check_players(player_data, guessed_players, console)
