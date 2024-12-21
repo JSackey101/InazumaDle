@@ -2,6 +2,7 @@ from players import PlayerDatabase
 from utilities import read_player_data, two_input_checker, make_guess, check_players, refresh_page
 import random
 from rich.console import Console  # type: ignore
+from rich.theme import Theme  # type: ignore
 
 
 if __name__ == "__main__":
@@ -23,7 +24,7 @@ if __name__ == "__main__":
             correct_guess, tries = make_guess(
                 player_data, random_player, tries, guessed_players)
             if correct_guess:
-                print(f"""Victory!
+                console.print(f"""Victory!
 
 You guessed {random_player}
 
