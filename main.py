@@ -5,7 +5,7 @@ from rich.console import Console  # type: ignore
 
 
 if __name__ == "__main__":
-    console = Console(width=40)
+    console = Console(width=40, theme=Theme({"warning": "red on yellow"}))
     refresh_page(console, "InazumaDle")
     player_data = PlayerDatabase(read_player_data("data.csv"))
     random_player = player_data.player_obj_list[random.randint(
