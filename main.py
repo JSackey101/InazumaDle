@@ -1,4 +1,4 @@
-from players import Player, PlayerDatabase
+from players import PlayerDatabase
 from utilities import read_player_data, two_input_checker, make_guess, check_players
 import random
 
