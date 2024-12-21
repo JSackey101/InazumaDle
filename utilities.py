@@ -15,11 +15,11 @@ def read_player_data(filepath):
         return list_of_players
 
 
-def input_checker(input_msg, des_type, reject_msg):
+def input_checker(input_msg, des_type, reject_msg, console):
     input_not_given = True
     while input_not_given:
         # "".join(filter(lambda x: x != " ", list(input(input_msg))))
-        input_val = input(input_msg).strip()
+        input_val = console.input(input_msg).strip()
         if des_type == str and all(char.isalpha() or char.isspace() for char in input_val):
             return input_val
         elif des_type == int and all(char.isdigit for char in input_val):
@@ -27,7 +27,7 @@ def input_checker(input_msg, des_type, reject_msg):
         elif des_type == bool and (input_val.capitalize() == "True" or input_val.capitalize() == "False"):
             return input_val.capitalize()
         else:
-            print(reject_msg)
+            console.print(reject_msg)
 
 
 def two_input_checker(input_msg, reject_msg, acc_input_A, acc_input_B):
