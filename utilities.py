@@ -61,11 +61,11 @@ def make_guess(player_data, random_player, tries, guessed_players, console):
                     f"""You have already guessed (\"{matches[0]}\"). Please guess another.
                     \n""")
             else:
-                correct_guess = player_data.comparison_result(
+                correct_guess, styled_print = player_data.comparison_result(
                     random_player, matches[0])
                 guessed_players.append(matches[0])
                 tries += 1
-                return correct_guess, tries
+                return correct_guess, styled_print, tries
 
         else:
             if guess_name.split(" ") > 1:

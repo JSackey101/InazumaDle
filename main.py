@@ -21,7 +21,7 @@ if __name__ == "__main__":
 \nEnter here: """,
                                    """\nYou must type either "Guess" or "Check".""", "Guess", "Check", console)
         if prompt == 1:
-            correct_guess, tries = make_guess(
+            correct_guess, styled_print, tries = make_guess(
                 player_data, random_player, tries, guessed_players, console)
             if correct_guess:
                 console.print(f"""Victory!
