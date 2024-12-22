@@ -7,7 +7,8 @@ import time
 
 
 def show_guesses(guess_results):
-    for guess in guess_results:
+    console.print(guess_results[0], justify="left")
+    for guess in reversed(guess_results[1:]):
         console.print(guess, justify="left")
 
 
