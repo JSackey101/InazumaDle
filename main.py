@@ -23,7 +23,6 @@ if __name__ == "__main__":
     for heading in list(random_player.player_dict.keys()):
         guess_results[0] += (
             f"[bold white on #666666]{heading.title()}") + " "*(20-len(heading))
-    # I wish to refresh the page then display the guesses made already
     prog_start = True
     while prog_start:
         refresh_page(console, "InazumaDle")
