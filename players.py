@@ -48,7 +48,7 @@ class PlayerDatabase:
             if comp_result[i]:
                 style = "bold white on green"
             else:
-                style = "bold white on #666666"
-            styled_print += f"[{style}]{list(guess_player.player_dict.keys())[i][:1].upper() + list(guess_player.player_dict.keys())[i][1:]}"
-
+                style = "bold white on red"
+            styled_print += f"[{style}]{list(guess_player.player_dict.values())[i][:1].upper() + list(guess_player.player_dict.values())[i][1:]}"
+            print(styled_print)
         return comp_result[1], styled_print
