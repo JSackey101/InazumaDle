@@ -3,16 +3,27 @@ from utilities import read_player_data, two_input_checker, make_guess, check_pla
 import random
 from rich.console import Console  # type: ignore
 from rich.theme import Theme  # type: ignore
+import time
+
+
+def show_guesses(guess_results):
+    for guess in guess_results:
+        console.print(guess, justify="left")
 
 
 if __name__ == "__main__":
-    console = Console(width=40, theme=Theme({"warning": "red on yellow"}))
+    console = Console(width=120, theme=Theme({"warning": "red on yellow"}))
     refresh_page(console, "InazumaDle")
     player_data = PlayerDatabase(read_player_data("data.csv"))
     random_player = player_data.player_obj_list[random.randint(
         0, player_data.player_count - 1)]
     tries = 0
     guessed_players = []
+    guess_results = [""]
+    for heading in list(random_player.player_dict.keys()):
+        guess_results[0] += (
+            f"[bold white on #666666]{heading.title()}") + " "*(20-len(heading))
+    # I wish to refresh the page then display the guesses made already
     prog_start = True
     while prog_start:
         prompt = two_input_checker("""\nWhat would you like to do?
@@ -23,6 +34,8 @@ if __name__ == "__main__":
         if prompt == 1:
             correct_guess, styled_print, tries = make_guess(
                 player_data, random_player, tries, guessed_players, console)
+            guess_results.append(styled_print)
+            show_guesses(guess_results)
             if correct_guess:
                 console.print(f"""Victory!
 
