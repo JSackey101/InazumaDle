@@ -1,2 +1,1 @@
-info)
-            print(player)
+" "*(20-len(heading))
