@@ -33,6 +33,11 @@ class PlayerDatabase:
                 style = "bold white on green"
             else:
                 style = "bold white on red"
-            styled_print += f"[{style}]{list(guess_player.player_dict.values())[i][:1].upper() + list(guess_player.player_dict.values())[i][1:]}" + " "*(
-                20-len(str(list(guess_player.player_dict.values())[i])))
+            if i == 4:
+                styled_print += f"[{style}]{list(guess_player.player_dict.values())[i][:1].upper() + list(guess_player.player_dict.values())[i][1:]}" + " "*(
+                    20-len(str(list(guess_player.player_dict.values())[i])))
+            else:
+                styled_print += f"[{style}]{list(guess_player.player_dict.values())[i].title()}" + " "*(
+                    20-len(str(list(guess_player.player_dict.values())[i])))
+
         return comp_result[1], styled_print
