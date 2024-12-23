@@ -125,3 +125,16 @@ def check_players(player_data, guessed_players, console):
 def refresh_page(console, headline):
     console.clear()
     console.rule(f"[bold rgb(255,165,0)]:zap: {headline} :zap:[/]\n")
+
+
+def show_guesses(guess_results, console):
+    console.print(guess_results[0], justify="left")
+    for guess in reversed(guess_results[1:]):
+        console.print(guess, justify="left")
+
+
+def show_checks(check_results, check_letter, console):
+    console.print(
+        f"\nThe characters that have not been guessed beginning with {check_letter.upper()} are:", justify="center")
+    for result in check_results:
+        console.print(result, justify="center")

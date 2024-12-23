@@ -1,21 +1,8 @@
 from players import PlayerDatabase
-from utilities import read_player_data, two_input_checker, make_guess, check_players, refresh_page
+from utilities import read_player_data, two_input_checker, make_guess, check_players, refresh_page, show_checks, show_guesses
 import random
 from rich.console import Console  # type: ignore
 from rich.theme import Theme  # type: ignore
-
-
-def show_guesses(guess_results):
-    console.print(guess_results[0], justify="left")
-    for guess in reversed(guess_results[1:]):
-        console.print(guess, justify="left")
-
-
-def show_checks(check_results, check_letter):
-    console.print(
-        f"\nThe characters that have not been guessed beginning with {check_letter.upper()} are:", justify="center")
-    for result in check_results:
-        console.print(result, justify="center")
 
 
 if __name__ == "__main__":
@@ -33,7 +20,7 @@ if __name__ == "__main__":
     prog_start = True
     while prog_start:
         refresh_page(console, "InazumaDle")
-        show_guesses(guess_results)
+        show_guesses(guess_results, console)
         if check_results:
             show_checks(check_results, check_letter)
         prompt = two_input_checker("""\nWhat would you like to do?
@@ -45,7 +32,7 @@ if __name__ == "__main__":
             correct_guess, styled_print, tries = make_guess(
                 player_data, random_player, tries, guessed_players, console)
             guess_results.append(styled_print)
-            show_guesses(guess_results)
+            show_guesses(guess_results, console)
             if correct_guess:
                 console.print(f"""Victory!
 
