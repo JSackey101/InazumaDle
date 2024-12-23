@@ -34,7 +34,7 @@ class PlayerDatabase:
             else:
                 style = "bold white on red"
             if i == 4:
-                styled_print += f"[{style}]{list(guess_player.player_dict.values())[i][:1].upper() + list(guess_player.player_dict.values())[i][1:]}" + " "*(
+                styled_print += f"[{style}]{list(guess_player.player_dict.values())[i].upper()}" + " "*(
                     20-len(str(list(guess_player.player_dict.values())[i])))
             else:
                 styled_print += f"[{style}]{list(guess_player.player_dict.values())[i].title()}" + " "*(
