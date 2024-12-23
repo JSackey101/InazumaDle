@@ -47,6 +47,7 @@ if __name__ == "__main__":
             correct_guess, styled_print, tries = make_guess(
                 player_data, random_player, tries, guessed_players, console)
             guess_results.append(styled_print)
+            show_guesses(guess_results)
             if correct_guess:
                 console.print(f"""Victory!
 
