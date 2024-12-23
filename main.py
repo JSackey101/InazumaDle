@@ -20,7 +20,6 @@ def show_checks(check_results, check_letter):
 
 if __name__ == "__main__":
     console = Console(width=120, theme=Theme({"warning": "red on yellow"}))
-    refresh_page(console, "InazumaDle")
     player_data = PlayerDatabase(read_player_data("data.csv"))
     random_player = player_data.player_obj_list[random.randint(
         0, player_data.player_count - 1)]
