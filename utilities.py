@@ -53,12 +53,12 @@ def make_guess(player_data, random_player, tries, guessed_players, console):
         if len(matches) == 0:
             console.print(
                 f"""The name/nickname you entered (\"{guess_name}\") was not found within the system.
-                    \n""")
+                    \n""", style="warning")
         elif len(matches) == 1:
             if matches[0] in guessed_players:
                 console.print(
                     f"""You have already guessed (\"{matches[0]}\"). Please guess another.
-                    \n""")
+                    \n""", style="warning")
             else:
                 correct_guess, styled_print = player_data.comparison_result(
                     random_player, matches[0])
@@ -72,7 +72,7 @@ def make_guess(player_data, random_player, tries, guessed_players, console):
                     1] == guess_name.split(" ")[1]]
             else:
                 console.print(
-                    f"The surname you have entered ({guess_name}) matches too many within the system")
+                    f"The surname you have entered ({guess_name}) matches too many within the system", style="warning")
                 need_given_name = True
                 while need_given_name:
                     console.print(
@@ -87,11 +87,11 @@ def make_guess(player_data, random_player, tries, guessed_players, console):
                             1] == guess_given_name]
                     if len(new_matches) == 0:
                         console.print(f"""The given name you entered (\"{guess_given_name}\") does not match a name.
-                        \nPlease refer to the names within the system that match the given surname.\n""")
+                        \nPlease refer to the names within the system that match the given surname.\n""", style="warning")
                     else:
                         if matches[0] in guessed_players:
                             console.print(f"""You have already guessed (\"{matches[0]}\"). Please guess another.
-                            \n""")
+                            \n""", style="warning")
                         else:
                             correct_guess = player_data.comparison_result(
                                 random_player, matches[0])
@@ -107,14 +107,14 @@ def check_players(player_data, guessed_players, console):
             "Enter the letter you wish to find character matches for: ", str,
             "This input should only contain letters.", console)
         if len(check_letter) > 1:
-            console.print("You should only enter 1 letter\n")
+            console.print("You should only enter 1 letter\n", style="warning")
             continue
         matches = [player for player in player_data.player_obj_list if (player.player_dict["name"][0] == check_letter.lower()
                    or player.player_dict["nickname"][0] == check_letter.lower()) and player not in guessed_players]
         if len(matches) == 0:
             console.print(
                 f"""No player names/nicknames that have not been guessed begin with the letter: (\"{check_letter.upper()}\").
-                    \n""")
+                    \n""", style="warning")
         else:
             styled_players = []
             for player in matches:
