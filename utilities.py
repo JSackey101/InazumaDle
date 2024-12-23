@@ -117,11 +117,15 @@ def check_players(player_data, guessed_players, console):
                 f"""No player names/nicknames that have not been guessed begin with the letter: (\"{check_letter.upper()}\").
                     \n""")
         else:
-            console.print(
-                f"\nThe characters that have not been guessed beginning with {check_letter.upper()} are:")
+            # console.print(
+            #     f"\nThe characters that have not been guessed beginning with {check_letter.upper()} are:")
+            # for player in matches:
+            #     console.print(player)
+            styled_players = []
             for player in matches:
-                console.print(player)
-            check_not_done = False
+                styled_players.append(f"[white on #666666]{player}")
+            return styled_players, check_letter
+            # check_not_done = False
 
 
 def refresh_page(console, headline):

@@ -12,6 +12,13 @@ def show_guesses(guess_results):
         console.print(guess, justify="left")
 
 
+def show_checks(check_results, check_letter):
+    console.print(
+        f"\nThe characters that have not been guessed beginning with {check_letter.upper()} are:", justify="center")
+    for result in check_results:
+        console.print(result, justify="center")
+
+
 if __name__ == "__main__":
     console = Console(width=120, theme=Theme({"warning": "red on yellow"}))
     refresh_page(console, "InazumaDle")
@@ -20,6 +27,7 @@ if __name__ == "__main__":
         0, player_data.player_count - 1)]
     tries = 0
     guessed_players = []
+    check_results = None
     guess_results = [""]
     for heading in list(random_player.player_dict.keys()):
         guess_results[0] += (
@@ -28,6 +36,8 @@ if __name__ == "__main__":
     while prog_start:
         refresh_page(console, "InazumaDle")
         show_guesses(guess_results)
+        if check_results:
+            show_checks(check_results, check_letter)
         prompt = two_input_checker("""\nWhat would you like to do?
 \nType "Guess" to make a guess.
 \nType "Check" to see a list of characters beginning with a specific letter that have not been guessed already.
@@ -47,4 +57,6 @@ Number of tries: {tries}""")
                 break
 
         else:
-            check_players(player_data, guessed_players, console)
+            check_results, check_letter = check_players(
+                player_data, guessed_players, console)
+            show_checks(check_results, check_letter)
