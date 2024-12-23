@@ -18,7 +18,6 @@ def read_player_data(filepath):
 def input_checker(input_msg, des_type, reject_msg, console):
     input_not_given = True
     while input_not_given:
-        # "".join(filter(lambda x: x != " ", list(input(input_msg))))
         input_val = console.input(input_msg).strip()
         if des_type == str and all(char.isalpha() or char.isspace() for char in input_val):
             return input_val
@@ -117,15 +116,10 @@ def check_players(player_data, guessed_players, console):
                 f"""No player names/nicknames that have not been guessed begin with the letter: (\"{check_letter.upper()}\").
                     \n""")
         else:
-            # console.print(
-            #     f"\nThe characters that have not been guessed beginning with {check_letter.upper()} are:")
-            # for player in matches:
-            #     console.print(player)
             styled_players = []
             for player in matches:
                 styled_players.append(f"[white on #666666]{player}")
             return styled_players, check_letter
-            # check_not_done = False
 
 
 def refresh_page(console, headline):

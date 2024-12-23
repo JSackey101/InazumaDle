@@ -3,7 +3,6 @@ from utilities import read_player_data, two_input_checker, make_guess, check_pla
 import random
 from rich.console import Console  # type: ignore
 from rich.theme import Theme  # type: ignore
-import time
 
 
 def show_guesses(guess_results):

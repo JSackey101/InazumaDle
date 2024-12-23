@@ -1,7 +1,3 @@
-import time
-# from rich.console import Console  # type: ignore
-# from rich.theme import Theme  # type: ignore
-
 
 class Player:
     def __init__(self, player_data, header_info):
@@ -31,18 +27,6 @@ class PlayerDatabase:
 
     def comparison_result(self, correct_player, guess_player):
         comp_result = correct_player.compare_players(guess_player)
-        # print(guess_player, "\n")
-        # time.sleep(0.5)
-        # for i in range(2, len(comp_result)):
-        #     time.sleep(0.5)
-        #     if comp_result[i]:
-        #         print(
-        #             f"{list(guess_player.player_dict.keys())[i][:1].upper() + list(guess_player.player_dict.keys())[i][1:]}: {list(guess_player.player_dict.values())[i][:1].upper() + list(guess_player.player_dict.values())[i][1:]} (Correct)")
-        #     else:
-        #         print(
-        #             f"{list(guess_player.player_dict.keys())[i][:1].upper() + list(guess_player.player_dict.keys())[i][1:]}: {list(guess_player.player_dict.values())[i][:1].upper() + list(guess_player.player_dict.values())[i][1:]} (Wrong)")
-        #     time.sleep(0.5)
-        # print("")
         styled_print = ""
         for i in range(len(comp_result)):
             if comp_result[i]:
