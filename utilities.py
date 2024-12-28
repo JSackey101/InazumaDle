@@ -3,11 +3,10 @@ from players import Player
 
 
 def read_player_data(filepath):
-    with open(filepath, "r", newline="") as players:
+    with open(filepath, "r", newline="", encoding="utf-8") as players:
         players_csv = csv.reader(players)
         players_data = [row for row in players_csv]
-        header_info = players_data[0]
-        players_data.remove(header_info)
+        header_info = players_data.pop(0)
         list_of_players = []
         for row in players_data:
             player = Player(row, header_info)
