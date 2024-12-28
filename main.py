@@ -22,7 +22,7 @@ if __name__ == "__main__":
         refresh_page(console, "InazumaDle")
         show_guesses(guess_results, console)
         if check_results:
-            show_checks(check_results, check_letter)
+            show_checks(check_results, check_letter, console)
         prompt = two_input_checker("""\nWhat would you like to do?
 \nType "Guess" to make a guess.
 \nType "Check" to see a list of characters beginning with a specific letter that have not been guessed already.
