@@ -1,8 +1,10 @@
+
+
+import random
 from players import PlayerDatabase
 from utilities import read_player_data, two_input_checker, make_guess, check_players, refresh_page, show_checks, show_guesses
-import random
-from rich.console import Console  # type: ignore
-from rich.theme import Theme  # type: ignore
+from rich.console import Console
+from rich.theme import Theme 
 
 
 if __name__ == "__main__":
@@ -27,7 +29,7 @@ if __name__ == "__main__":
 \nType "Guess" to make a guess.
 \nType "Check" to see a list of characters beginning with a specific letter that have not been guessed already.
 \nEnter here: """,
-                                   """\nYou must type either "Guess" or "Check".""", "Guess", "Check", console)
+"""\nYou must type either "Guess" or "Check".""", "Guess", "Check", console)
         if prompt == 1:
             correct_guess, styled_print, tries = make_guess(
                 player_data, random_player, tries, guessed_players, console)
