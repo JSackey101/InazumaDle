@@ -1,11 +1,15 @@
+import os
 import csv
 from players import Player
 
+ABS_PATH = os.path.dirname(os.path.abspath(__file__))
 
-def read_player_data(filepath):
-    with open(filepath, "r", newline="", encoding="utf-8") as players:
+def read_player_data(file_name: str) -> list[Player]:
+    """ Reads the player data from the CSV file and 
+        creates and returns a list of Player objects. """
+    with open(os.path.join(ABS_PATH, file_name), "r", newline="", encoding="utf-8") as players:
         players_csv = csv.reader(players)
-        players_data = [row for row in players_csv]
+        players_data = list(row for row in players_csv)
         header_info = players_data.pop(0)
         list_of_players = []
         for row in players_data:
