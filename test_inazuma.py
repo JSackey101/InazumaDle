@@ -23,3 +23,10 @@ def test_validate_char_space():
         only characters and spaces. """
     with pytest.raises(ValueError):
         ErrorRaising.validate_char_space("test 1")
+
+
+def test_validate_digits():
+    """ Tests whether a ValueError is raised when an input string is not
+        only digits. """
+    with pytest.raises(ValueError):
+        ErrorRaising.validate_digits("12four5")
