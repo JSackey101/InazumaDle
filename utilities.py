@@ -1,21 +1,7 @@
 import os
 import csv
 from players import Player
-
-ABS_PATH = os.path.dirname(os.path.abspath(__file__))
-
-def read_player_data(file_name: str) -> list[Player]:
-    """ Reads the player data from the CSV file and 
-        creates and returns a list of Player objects. """
-    with open(os.path.join(ABS_PATH, file_name), "r", newline="", encoding="utf-8") as players:
-        players_csv = csv.reader(players)
-        players_data = list(row for row in players_csv)
-        header_info = players_data.pop(0)
-        list_of_players = []
-        for row in players_data:
-            player = Player(row, header_info)
-            list_of_players.append(player)
-        return list_of_players
+from rich.console import Console
 
 class ErrorRaising():
     """ Class for raising errors. """
@@ -40,6 +26,44 @@ class ErrorRaising():
         """ Validates that the input is one of the accepted inputs. """
         if input_val.strip().capitalize() not in [first_acc_input, second_acc_input]:
             raise ValueError(f"Input must be either '{first_acc_input}' or '{second_acc_input}'.")
+
+class Utility():
+    """ Class containing utility functions for the program. """
+
+
+    ABS_PATH = os.path.dirname(os.path.abspath(__file__))
+
+    @staticmethod
+    def get_input(console: Console, input_msg: str) -> str:
+        """ Takes an input, removes leading/trailing spaces and makes it all lowercase. """
+        ErrorRaising.validate_str(input_msg)
+        input_val = console.input(input_msg).strip().lower()
+        return input_val
+    @staticmethod
+    def check_two_options(input_val: str, first_acc_input: str, second_acc_input: str) -> int:
+        """ Checks which one of the accepted inputs the given input matches. """
+        ErrorRaising.validate_str(input_val)
+        ErrorRaising.validate_str(first_acc_input)
+        ErrorRaising.validate_str(second_acc_input)
+        ErrorRaising.validate_two_inputs(input_val, first_acc_input, second_acc_input)
+        if input_val == first_acc_input:
+            return 1
+        return 2
+
+
+    @staticmethod
+    def read_player_data(file_name: str) -> list[Player]:
+        """ Reads the player data from the CSV file and 
+            creates and returns a list of Player objects. """
+        with open(os.path.join(Utility.ABS_PATH, file_name), "r", newline="", encoding="utf-8") as players:
+            players_csv = csv.reader(players)
+            players_data = list(row for row in players_csv)
+            header_info = players_data.pop(0)
+            list_of_players = []
+            for row in players_data:
+                player = Player(row, header_info)
+                list_of_players.append(player)
+            return list_of_players
 
 
 def input_checker(input_msg, des_type, reject_msg, console):
