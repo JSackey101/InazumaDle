@@ -35,6 +35,11 @@ class ErrorRaising():
         """ Validates that input contains only digits. """
         if not all(char.isdigit() for char in input_val):
             raise ValueError("Input must consist of only digits. ")
+    @staticmethod
+    def validate_two_inputs(input_val: str, first_acc_input: str, second_acc_input: str) -> None:
+        """ Validates that the input is one of the accepted inputs. """
+        if input_val.strip().capitalize() not in [first_acc_input, second_acc_input]:
+            raise ValueError(f"Input must be either '{first_acc_input}' or '{second_acc_input}'.")
 
 
 def input_checker(input_msg, des_type, reject_msg, console):
