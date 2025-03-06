@@ -17,6 +17,20 @@ def read_player_data(file_name: str) -> list[Player]:
             list_of_players.append(player)
         return list_of_players
 
+class ErrorRaising():
+    """ Class for raising errors. """
+
+    @staticmethod
+    def validate_str(input_val: str):
+        """ Validates that input is a string. """
+        if not isinstance(input_val, str):
+            raise TypeError("Input must be a string. ")
+    @staticmethod
+    def validate_char_space(input_val: str):
+        """ Validates that input contains only characters and spaces. """
+        if not all(char.isalpha() or char.isspace() for char in input_val):
+            raise ValueError("Input must consist of only characters and spaces. ")
+
 
 def input_checker(input_msg, des_type, reject_msg, console):
     input_not_given = True
