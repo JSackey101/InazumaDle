@@ -21,15 +21,20 @@ class ErrorRaising():
     """ Class for raising errors. """
 
     @staticmethod
-    def validate_str(input_val: str):
+    def validate_str(input_val: str) -> None:
         """ Validates that input is a string. """
         if not isinstance(input_val, str):
             raise TypeError("Input must be a string. ")
     @staticmethod
-    def validate_char_space(input_val: str):
+    def validate_char_space(input_val: str) -> None:
         """ Validates that input contains only characters and spaces. """
         if not all(char.isalpha() or char.isspace() for char in input_val):
             raise ValueError("Input must consist of only characters and spaces. ")
+    @staticmethod
+    def validate_digits(input_val: str) -> None:
+        """ Validates that input contains only digits. """
+        if not all(char.isdigit() for char in input_val):
+            raise ValueError("Input must consist of only digits. ")
 
 
 def input_checker(input_msg, des_type, reject_msg, console):
