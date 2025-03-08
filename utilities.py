@@ -27,6 +27,17 @@ class ErrorRaising():
         if input_val.strip().capitalize() not in [first_acc_input, second_acc_input]:
             raise ValueError(f"Input must be either '{first_acc_input}' or '{second_acc_input}'.")
 
+    @staticmethod
+    def validate_one_name(input_val: str):
+        """ Validates that the input only contains 1 name. """
+        if len(input_val.split()) != 1:
+            raise ValueError("Input must contain only 1 name. ")
+    @staticmethod
+    def validate_not_empty(input_val: str):
+        """ Validates that the input is not empty (either "" or whitespace only). """
+        if not input_val.strip():
+            raise ValueError("Input must not be empty. ")
+
 class Utility():
     """ Class containing utility functions for the program. """
 
@@ -51,11 +62,13 @@ class Utility():
         return 2
 
 
+
     @staticmethod
     def read_player_data(file_name: str) -> list[Player]:
         """ Reads the player data from the CSV file and 
             creates and returns a list of Player objects. """
-        with open(os.path.join(Utility.ABS_PATH, file_name), "r", newline="", encoding="utf-8") as players:
+        with open(os.path.join(Utility.ABS_PATH, file_name), "r",
+                  newline="", encoding="utf-8") as players:
             players_csv = csv.reader(players)
             players_data = list(row for row in players_csv)
             header_info = players_data.pop(0)
@@ -64,6 +77,21 @@ class Utility():
                 player = Player(row, header_info)
                 list_of_players.append(player)
             return list_of_players
+    @staticmethod
+    def search_first_nick_name(player_list: list[Player], guess_name: str):
+        """ Return players whose first name or nickname matches the guess name. """
+        return [player for player in player_list
+                if guess_name.split()[0].lower() in
+                (player.player_dict['name'].split()[0].lower(), 
+                 player.player_dict['nickname'].lower())]
+
+    @staticmethod
+    def search_last_name(player_list: list[Player], guess_name: str):
+        """ Return players whose last name matches the guess name. """
+        print(player_list[0].player_dict['name'].split()[1].lower())
+        print(guess_name.split()[0].lower())
+        return [player for player in player_list
+                if guess_name.split()[0].lower() == player.player_dict['name'].split()[1].lower()]
 
 
 def input_checker(input_msg, des_type, reject_msg, console):
