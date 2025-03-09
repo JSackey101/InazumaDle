@@ -37,6 +37,11 @@ class ErrorRaising():
         """ Validates that the input is not empty (either "" or whitespace only). """
         if not input_val.strip():
             raise ValueError("Input must not be empty. ")
+    @staticmethod
+    def validate_console(input_val: Console):
+        """ Validates that the input is a Console object. """
+        if not isinstance(input_val, Console):
+            raise TypeError("Input must be a rich.console.Console object")
 
 class Utility():
     """ Class containing utility functions for the program. """
@@ -88,8 +93,6 @@ class Utility():
     @staticmethod
     def search_last_name(player_list: list[Player], guess_name: str):
         """ Return players whose last name matches the guess name. """
-        print(player_list[0].player_dict['name'].split()[1].lower())
-        print(guess_name.split()[0].lower())
         return [player for player in player_list
                 if guess_name.split()[0].lower() == player.player_dict['name'].split()[1].lower()]
 
