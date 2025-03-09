@@ -61,6 +61,12 @@ class TestErrorRaising():
         with pytest.raises(ValueError):
             ErrorRaising.validate_not_empty("   ")
 
+    @staticmethod
+    def test_validate_console():
+        """ Tests whether a TypeError is raised when input is not
+            a rich.console.Console object. """
+        with pytest.raises(TypeError):
+            ErrorRaising.validate_console("string")
 
 class TestUtility():
     """ A class to test the Utility class. """
