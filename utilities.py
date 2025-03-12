@@ -28,17 +28,17 @@ class ErrorRaising():
             raise ValueError(f"Input must be either '{first_acc_input}' or '{second_acc_input}'.")
 
     @staticmethod
-    def validate_one_name(input_val: str):
+    def validate_one_name(input_val: str) -> None:
         """ Validates that the input only contains 1 name. """
         if len(input_val.split()) != 1:
             raise ValueError("Input must contain only 1 name. ")
     @staticmethod
-    def validate_not_empty(input_val: str):
+    def validate_not_empty(input_val: str) -> None:
         """ Validates that the input is not empty (either "" or whitespace only). """
         if not input_val.strip():
             raise ValueError("Input must not be empty. ")
     @staticmethod
-    def validate_console(input_val: Console):
+    def validate_console(input_val: Console) -> None:
         """ Validates that the input is a Console object. """
         if not isinstance(input_val, Console):
             raise TypeError("Input must be a rich.console.Console object")
@@ -53,6 +53,7 @@ class Utility():
     def get_input(console: Console, input_msg: str) -> str:
         """ Takes an input, removes leading/trailing spaces and makes it all lowercase. """
         ErrorRaising.validate_str(input_msg)
+        ErrorRaising.validate_console(console)
         input_val = console.input(input_msg).strip().lower()
         return input_val
     @staticmethod
@@ -83,7 +84,7 @@ class Utility():
                 list_of_players.append(player)
             return list_of_players
     @staticmethod
-    def search_first_nick_name(player_list: list[Player], guess_name: str):
+    def search_first_nick_name(player_list: list[Player], guess_name: str) -> list[Player]:
         """ Return players whose first name or nickname matches the guess name. """
         return [player for player in player_list
                 if guess_name.split()[0].lower() in
@@ -91,37 +92,45 @@ class Utility():
                  player.player_dict['nickname'].lower())]
 
     @staticmethod
-    def search_last_name(player_list: list[Player], guess_name: str):
+    def search_last_name(player_list: list[Player], guess_name: str) -> list[Player]:
         """ Return players whose last name matches the guess name. """
         return [player for player in player_list
                 if guess_name.split()[0].lower() == player.player_dict['name'].split()[1].lower()]
 
+    @staticmethod
+    def is_valid_matches(console, matches, guess_name, guessed_players):
+        if len(matches) == 0:
+            console.print(
+                f"""The name/nickname you entered (\"{guess_name}\") was not found within the system.
+                        \n""", style="warning")
+            return False
+        if len(matches) == 1 and matches[0] in guessed_players:
+            console.print(
+                f"""You have already guessed (\"{matches[0]}\"). Please guess another.
+                        \n""", style="warning")
+            return False
+        return True
 
-def input_checker(input_msg, des_type, reject_msg, console):
-    input_not_given = True
-    while input_not_given:
-        input_val = console.input(input_msg).strip()
-        if des_type == str and all(char.isalpha() or char.isspace() for char in input_val):
-            return input_val
-        elif des_type == int and all(char.isdigit for char in input_val):
-            return input_val
-        elif des_type == bool and (input_val.capitalize() == "True" or input_val.capitalize() == "False"):
-            return input_val.capitalize()
-        else:
-            console.print(reject_msg)
+    @staticmethod
+    def check_correct_guess(player_data, random_player, matched_player, guessed_players, tries):
+        correct_guess, styled_print = player_data.comparison_result(
+            random_player, matched_player)
+        guessed_players.append(matched_player)
+        tries += 1
+        return (correct_guess, styled_print, tries)
+    
 
-
-def two_input_checker(input_msg, reject_msg, acc_input_A, acc_input_B, console):
-    input_not_given = True
-    while input_not_given:
-        input_val = "".join(
-            filter(lambda x: x != " ", list(console.input(input_msg))))
-        if input_val.capitalize() == acc_input_A:
-            return 1
-        elif input_val.capitalize() == acc_input_B:
-            return 2
-        else:
-            console.print(reject_msg)
+def make_guess_v2(player_data, random_player, tries, guessed_players, console):
+    guess_not_made = True
+    while guess_not_made:
+        try:
+            guess_name = Utility.get_input(
+                console, "Enter the name/nickname of the character you wish to guess: ")
+            ErrorRaising.validate_not_empty(guess_name)
+            ErrorRaising.validate_char_space(guess_name)
+        except (ValueError, TypeError) as err:
+            console.print(err)
+            continue
 
 
 def make_guess(player_data, random_player, tries, guessed_players, console):
@@ -180,6 +189,33 @@ def make_guess(player_data, random_player, tries, guessed_players, console):
                             guessed_players.append(matches[0])
                             tries += 1
                             return correct_guess, tries
+
+def input_checker(input_msg, des_type, reject_msg, console):
+    input_not_given = True
+    while input_not_given:
+        input_val = console.input(input_msg).strip()
+        if des_type == str and all(char.isalpha() or char.isspace() for char in input_val):
+            return input_val
+        elif des_type == int and all(char.isdigit for char in input_val):
+            return input_val
+        elif des_type == bool and (input_val.capitalize() == "True" or input_val.capitalize() == "False"):
+            return input_val.capitalize()
+        else:
+            console.print(reject_msg)
+
+
+def two_input_checker(input_msg, reject_msg, acc_input_A, acc_input_B, console):
+    input_not_given = True
+    while input_not_given:
+        input_val = "".join(
+            filter(lambda x: x != " ", list(console.input(input_msg))))
+        if input_val.capitalize() == acc_input_A:
+            return 1
+        elif input_val.capitalize() == acc_input_B:
+            return 2
+        else:
+            console.print(reject_msg)
+
 
 
 def check_players(player_data, guessed_players, console):
