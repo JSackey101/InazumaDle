@@ -198,3 +198,37 @@ class TestUtility():
         assert len(matches) == 2
         assert matches[0] == test_players_same_last[0]
         assert matches[1] == test_players_same_last[1]
+
+    @staticmethod
+    def test_is_valid_matches(test_console, test_player_one):
+        """ Tests whether True is returned when the matches 
+            aren't empty or 1 but already guessed. """
+        is_valid = Utility.is_valid_matches(test_console, [test_player_one], "test", [])
+        assert is_valid
+
+    @staticmethod
+    def test_is_valid_matches_no_matches(test_console):
+        """ Tests whether False is returned when the matches 
+            are empty. """
+        is_valid = Utility.is_valid_matches(
+            test_console, [], "test", [])
+        assert not is_valid
+
+    @staticmethod
+    def test_is_valid_matches_already_guessed(test_console, test_player_one):
+        """ Tests whether True is returned when the match found
+            is already guessed. """
+        is_valid = Utility.is_valid_matches(
+            test_console, [test_player_one], "test", [test_player_one])
+        assert not is_valid
+
+    @staticmethod
+    def test_correct_guess(test_player_two, test_player_database):
+        """ Tests whether True and the correct print is returned for a correct guess. """
+        correct_guess, styled_print, _ = Utility.check_correct_guess(test_player_database, test_player_two,
+                                                                 test_player_two, [], 0)
+        assert correct_guess
+        assert "bold white on green" in styled_print
+        assert styled_print.count("bold white on green") == 6
+        assert "Shourin" in  styled_print
+        

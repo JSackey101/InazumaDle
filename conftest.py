@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import MagicMock
 from rich.console import Console
-from players import Player
+from players import Player, PlayerDatabase
 
 @pytest.fixture
 def test_player_data():
@@ -49,3 +49,26 @@ def test_players_same_last():
     player_one = "shourin,shourinji ayumu,forest,male,MF,1".split(",")
     player_two = "shishido,shishido ayumu,fire,male,MF,1".split(",")
     return [Player(player, header_info) for player in (player_one, player_two)]
+
+@pytest.fixture()
+def test_player_one():
+    """ Returns a Player object. """
+    header_info = "nickname,name,element,gender,position,year".split(",")
+    player_one = "shourin,shourinji ayumu,forest,male,MF,1".split(",")
+    return Player(player_one, header_info)
+
+
+@pytest.fixture()
+def test_player_two():
+    """ Returns a Player object. """
+    header_info = "nickname,name,element,gender,position,year".split(",")
+    player_two = "shishido,shishido sakichi,fire,male,MF,1".split(",")
+    return Player(player_two, header_info)
+
+@pytest.fixture()
+def test_player_database():
+    """ Returns a PlayerDatabase object """
+    header_info = "nickname,name,element,gender,position,year".split(",")
+    player_one = "shourin,shourinji ayumu,forest,male,MF,1".split(",")
+    player_two = "shishido,shourinji sakichi,fire,male,MF,1".split(",")
+    return PlayerDatabase([Player(player, header_info) for player in (player_one, player_two)])
