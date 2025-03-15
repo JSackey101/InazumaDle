@@ -1,6 +1,6 @@
 import os
 import csv
-from players import Player
+from players import Player, PlayerDatabase
 from rich.console import Console
 
 class ErrorRaising():
@@ -88,7 +88,7 @@ class Utility():
         """ Return players whose first name or nickname matches the guess name. """
         return [player for player in player_list
                 if guess_name.split()[0].lower() in
-                (player.player_dict['name'].split()[0].lower(), 
+                (player.player_dict['name'].split()[0].lower(),
                  player.player_dict['nickname'].lower())]
 
     @staticmethod
@@ -98,10 +98,12 @@ class Utility():
                 if guess_name.split()[0].lower() == player.player_dict['name'].split()[1].lower()]
 
     @staticmethod
-    def is_valid_matches(console, matches, guess_name, guessed_players):
+    def is_valid_matches(console: Console, matches: list[Player],
+                         guess_name: str, guessed_players: list[Player]) -> bool:
+        """ Checks whether no matches are found or the match has already been guessed. """
         if len(matches) == 0:
             console.print(
-                f"""The name/nickname you entered (\"{guess_name}\") was not found within the system.
+                f"""The name you entered (\"{guess_name}\") was not found within the system.
                         \n""", style="warning")
             return False
         if len(matches) == 1 and matches[0] in guessed_players:
@@ -112,25 +114,70 @@ class Utility():
         return True
 
     @staticmethod
-    def check_correct_guess(player_data, random_player, matched_player, guessed_players, tries):
+    def check_correct_guess(player_data: PlayerDatabase, random_player: Player,
+                            matched_player: Player, guessed_players: list[Player],
+                            tries: int) -> tuple:
+        """ Checks whether the guess was correct. """
         correct_guess, styled_print = player_data.comparison_result(
             random_player, matched_player)
         guessed_players.append(matched_player)
         tries += 1
         return (correct_guess, styled_print, tries)
     
+    @staticmethod
+    def get_check_input(console: Console) -> str:
+        """ Gets the name input from the user and validates it. """
+        while True:
+            try:
+                guess_name = Utility.get_input(
+                    console, "Enter the name/nickname of the character you wish to guess: ")
+                ErrorRaising.validate_not_empty(guess_name)
+                ErrorRaising.validate_char_space(guess_name)
+            except (ValueError, TypeError) as err:
+                console.print(err)
+            else:
+                return guess_name
 
-def make_guess_v2(player_data, random_player, tries, guessed_players, console):
-    guess_not_made = True
-    while guess_not_made:
-        try:
-            guess_name = Utility.get_input(
-                console, "Enter the name/nickname of the character you wish to guess: ")
-            ErrorRaising.validate_not_empty(guess_name)
-            ErrorRaising.validate_char_space(guess_name)
-        except (ValueError, TypeError) as err:
-            console.print(err)
-            continue
+    @staticmethod
+    def make_guess_v2(player_data: PlayerDatabase, random_player: Player,
+                      tries: int, guessed_players: list[Player],
+                      console: Console) -> tuple:
+        """ Takes a name and uses this to guess a player. """
+        while True:
+            guess_name = Utility.get_check_input(console)
+            matches = Utility.search_first_nick_name(player_data.player_obj_list, guess_name)
+            if not Utility.is_valid_matches(console, matches, guess_name, guessed_players):
+                continue
+            if len(guess_name.split()) > 1 and len(matches) > 1:
+                matches = Utility.search_last_name(matches, guess_name)
+            if len(matches) == 1:
+                for player in matches:
+                    print(player)
+                return Utility.check_correct_guess(player_data, random_player,
+                                                matches[0], guessed_players, tries)
+            break
+        console.print(
+            f"The surname you have entered ({guess_name}) matches too many within the system",
+            style="warning")
+        while True:
+            console.print(
+                """Please refer to the names within the 
+    system that match the given surname which are:""")
+            for player in matches:
+                console.print(player)
+            guess_name = Utility.get_check_input(console)
+            last_matches = Utility.search_first_nick_name(
+                matches, guess_name)
+            if not Utility.is_valid_matches(console, last_matches, guess_name, guessed_players):
+                continue
+            if len(last_matches) == 1:
+                for player in last_matches:
+                    print(player)
+                break
+        return Utility.check_correct_guess(player_data, random_player,
+                                                last_matches[0], guessed_players, tries)
+
+
 
 
 def make_guess(player_data, random_player, tries, guessed_players, console):
